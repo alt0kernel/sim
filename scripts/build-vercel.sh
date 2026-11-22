@@ -42,4 +42,5 @@ em++ backend/server.cpp -std=c++17 -O2 -fexceptions -isystem "$boost_include" \
   --no-entry -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT=web \
   -sEXPORTED_RUNTIME_METHODS=ccall -sALLOW_MEMORY_GROWTH=1 \
   -o frontend/node_modules/.cache/saarathi/simulator.mjs
-npm --prefix frontend run build -- --mode vercel
+cd frontend
+npm run build -- --mode vercel

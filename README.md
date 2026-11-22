@@ -75,7 +75,7 @@ npx vercel deploy --prod
 To preview the same build locally:
 
 ```bash
-npm ci --prefix frontend
+(cd frontend && npm ci)
 bash scripts/build-vercel.sh
 npm --prefix frontend run preview
 ```
