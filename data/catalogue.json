@@ -1,0 +1,711 @@
+{
+  "skus": [
+    {
+      "sku_id": "A1-01",
+      "name": "Whole Milk 1L",
+      "family": "milk",
+      "embeddingSeed": 113,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 68,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 12,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A1-02",
+      "name": "Toned Milk 1L",
+      "family": "milk",
+      "embeddingSeed": 310,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 58,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 14,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A1-03",
+      "name": "Salted Butter 100g",
+      "family": "butter",
+      "embeddingSeed": 507,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 62,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 9,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A1-04",
+      "name": "Unsalted Butter 100g",
+      "family": "butter",
+      "embeddingSeed": 704,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 65,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 9,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A1-05",
+      "name": "Greek Yogurt 400g",
+      "family": "yogurt",
+      "embeddingSeed": 901,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 105,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 7,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A1-06",
+      "name": "Plain Curd 400g",
+      "family": "yogurt",
+      "embeddingSeed": 1098,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 48,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 11,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A1-07",
+      "name": "Cheddar Cheese 200g",
+      "family": "cheese",
+      "embeddingSeed": 1295,
+      "aisle": "Aisle_1",
+      "macro_category": "dairy",
+      "price_inr": 158,
+      "allergens": [
+        "milk"
+      ],
+      "stock": 8,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-01",
+      "name": "Basmati Rice 1kg",
+      "family": "rice",
+      "embeddingSeed": 1492,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 160,
+      "allergens": [],
+      "stock": 9,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-02",
+      "name": "Brown Rice 1kg",
+      "family": "rice",
+      "embeddingSeed": 1689,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 135,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-03",
+      "name": "Rolled Oats 500g",
+      "family": "oats",
+      "embeddingSeed": 1886,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 95,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-04",
+      "name": "Instant Oats 500g",
+      "family": "oats",
+      "embeddingSeed": 2083,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 105,
+      "allergens": [],
+      "stock": 9,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-05",
+      "name": "Wheat Flour 1kg",
+      "family": "flour",
+      "embeddingSeed": 2280,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 60,
+      "allergens": [
+        "wheat"
+      ],
+      "stock": 12,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-06",
+      "name": "Multigrain Flour 1kg",
+      "family": "flour",
+      "embeddingSeed": 2477,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 85,
+      "allergens": [
+        "wheat"
+      ],
+      "stock": 8,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A2-07",
+      "name": "Quinoa 500g",
+      "family": "quinoa",
+      "embeddingSeed": 2674,
+      "aisle": "Aisle_2",
+      "macro_category": "grains",
+      "price_inr": 190,
+      "allergens": [],
+      "stock": 7,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-01",
+      "name": "Red Apples 1kg",
+      "family": "apple",
+      "embeddingSeed": 2871,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 185,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-02",
+      "name": "Green Apples 1kg",
+      "family": "apple",
+      "embeddingSeed": 3068,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 205,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-03",
+      "name": "Oranges 1kg",
+      "family": "orange",
+      "embeddingSeed": 3265,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 110,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-04",
+      "name": "Mandarins 1kg",
+      "family": "orange",
+      "embeddingSeed": 3462,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 130,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-05",
+      "name": "Tomatoes 1kg",
+      "family": "tomato",
+      "embeddingSeed": 3659,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 65,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-06",
+      "name": "Cherry Tomatoes 250g",
+      "family": "tomato",
+      "embeddingSeed": 3856,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 95,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A3-07",
+      "name": "Carrots 1kg",
+      "family": "carrot",
+      "embeddingSeed": 4053,
+      "aisle": "Aisle_3",
+      "macro_category": "produce",
+      "price_inr": 70,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-01",
+      "name": "Corn Flakes 500g",
+      "family": "cornflakes",
+      "embeddingSeed": 4250,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 155,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-02",
+      "name": "Honey Corn Flakes 500g",
+      "family": "cornflakes",
+      "embeddingSeed": 4447,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 185,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-03",
+      "name": "Peanut Butter 340g",
+      "family": "peanutbutter",
+      "embeddingSeed": 4644,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 210,
+      "allergens": [
+        "peanuts"
+      ],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-04",
+      "name": "Almond Butter 200g",
+      "family": "nutbutter",
+      "embeddingSeed": 4841,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 320,
+      "allergens": [
+        "tree nuts"
+      ],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-05",
+      "name": "Strawberry Jam 250g",
+      "family": "jam",
+      "embeddingSeed": 5038,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 125,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-06",
+      "name": "Mixed Fruit Jam 250g",
+      "family": "jam",
+      "embeddingSeed": 5235,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 118,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A4-07",
+      "name": "Honey 250g",
+      "family": "honey",
+      "embeddingSeed": 5432,
+      "aisle": "Aisle_4",
+      "macro_category": "breakfast",
+      "price_inr": 170,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-01",
+      "name": "Olive Oil 500ml",
+      "family": "oliveoil",
+      "embeddingSeed": 5629,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 415,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-02",
+      "name": "Extra Virgin Olive Oil 500ml",
+      "family": "oliveoil",
+      "embeddingSeed": 5826,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 525,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-03",
+      "name": "Sunflower Oil 1L",
+      "family": "cooking-oil",
+      "embeddingSeed": 6023,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 150,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-04",
+      "name": "Groundnut Oil 1L",
+      "family": "cooking-oil",
+      "embeddingSeed": 6220,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 190,
+      "allergens": [
+        "peanuts"
+      ],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-05",
+      "name": "Chickpeas 500g",
+      "family": "beans",
+      "embeddingSeed": 6417,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 82,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-06",
+      "name": "Kidney Beans 500g",
+      "family": "beans",
+      "embeddingSeed": 6614,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 95,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A5-07",
+      "name": "Sea Salt 500g",
+      "family": "salt",
+      "embeddingSeed": 6811,
+      "aisle": "Aisle_5",
+      "macro_category": "pantry",
+      "price_inr": 52,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-01",
+      "name": "Orange Juice 1L",
+      "family": "juice",
+      "embeddingSeed": 7008,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 125,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-02",
+      "name": "Apple Juice 1L",
+      "family": "juice",
+      "embeddingSeed": 7205,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 130,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-03",
+      "name": "Green Tea 25 bags",
+      "family": "tea",
+      "embeddingSeed": 7402,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 155,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-04",
+      "name": "Black Tea 25 bags",
+      "family": "tea",
+      "embeddingSeed": 7599,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 110,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-05",
+      "name": "Instant Coffee 100g",
+      "family": "coffee",
+      "embeddingSeed": 7796,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 265,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-06",
+      "name": "Decaf Coffee 100g",
+      "family": "coffee",
+      "embeddingSeed": 7993,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 290,
+      "allergens": [],
+      "stock": 10,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    },
+    {
+      "sku_id": "A6-07",
+      "name": "Mineral Water 1L",
+      "family": "water",
+      "embeddingSeed": 8190,
+      "aisle": "Aisle_6",
+      "macro_category": "beverages",
+      "price_inr": 25,
+      "allergens": [],
+      "stock": 16,
+      "tactile_desc": "a sealed retail pack with a tactile shelf label"
+    }
+  ],
+  "layout": {
+    "nodes": {
+      "Entrance": {
+        "xy": [
+          70,
+          515
+        ],
+        "label": "Entrance"
+      },
+      "Checkout": {
+        "xy": [
+          708,
+          515
+        ],
+        "label": "Checkout"
+      },
+      "Aisle_1": {
+        "xy": [
+          205,
+          165
+        ],
+        "label": "Dairy & Chilled"
+      },
+      "Aisle_2": {
+        "xy": [
+          390,
+          165
+        ],
+        "label": "Rice & Grains"
+      },
+      "Aisle_3": {
+        "xy": [
+          575,
+          165
+        ],
+        "label": "Fresh Produce"
+      },
+      "Aisle_4": {
+        "xy": [
+          205,
+          380
+        ],
+        "label": "Breakfast"
+      },
+      "Aisle_5": {
+        "xy": [
+          390,
+          380
+        ],
+        "label": "Cooking & Pantry"
+      },
+      "Aisle_6": {
+        "xy": [
+          575,
+          380
+        ],
+        "label": "Beverages"
+      }
+    },
+    "extra_edges": []
+  },
+  "shopping_lists": {
+    "Everyday Essentials": [
+      "A1-01",
+      "A2-02",
+      "A3-01",
+      "A4-01",
+      "A5-01",
+      "A6-07"
+    ],
+    "Breakfast Run": [
+      "A1-04",
+      "A3-02",
+      "A4-02",
+      "A4-05",
+      "A6-03"
+    ],
+    "Weekly Groceries": [
+      "A1-06",
+      "A2-01",
+      "A2-05",
+      "A3-05",
+      "A4-07",
+      "A5-05",
+      "A6-01"
+    ],
+    "Allergen Safety Demo": [
+      "A1-01",
+      "A4-03",
+      "A5-04",
+      "A6-02"
+    ]
+  },
+  "profiles": {
+    "Default": {
+      "avoid_allergens": []
+    },
+    "Peanut Allergy": {
+      "avoid_allergens": [
+        "peanuts"
+      ]
+    },
+    "Dairy-free": {
+      "avoid_allergens": [
+        "milk"
+      ]
+    },
+    "Gluten-free": {
+      "avoid_allergens": [
+        "wheat"
+      ]
+    }
+  },
+  "retrieval": {
+    "embedding_dim": 64,
+    "family_weight": 0.8,
+    "variant_weight": 0.6,
+    "caqe_radius": 150.0,
+    "tau_sim": 0.58,
+    "max_scan_attempts": 3
+  },
+  "sensors": {
+    "tau_obs": 1.2,
+    "rgbd": {
+      "max_range_m": 6.0,
+      "noise_std_m": 0.08
+    },
+    "tof": {
+      "max_range_m": 4.0,
+      "noise_std_m": 0.05
+    },
+    "mono": {
+      "f_cam": 700,
+      "bbox_noise_px": 2.0
+    }
+  },
+  "lighting": {
+    "bright": {
+      "det_conf": 0.96,
+      "embed_noise": 0.028,
+      "lookalike_p": 0.02
+    },
+    "normal": {
+      "det_conf": 0.9,
+      "embed_noise": 0.048,
+      "lookalike_p": 0.09
+    },
+    "dim": {
+      "det_conf": 0.76,
+      "embed_noise": 0.105,
+      "lookalike_p": 0.25
+    }
+  },
+  "obstacle_types": [
+    {
+      "kind": "trolley",
+      "label": "Shopping trolley",
+      "w_real_m": 0.75,
+      "speed_mps": 0.18
+    },
+    {
+      "kind": "person",
+      "label": "Other shopper",
+      "w_real_m": 0.5,
+      "speed_mps": 0.35
+    },
+    {
+      "kind": "box",
+      "label": "Stacked boxes",
+      "w_real_m": 0.65,
+      "speed_mps": 0
+    },
+    {
+      "kind": "spill",
+      "label": "Wet floor zone",
+      "w_real_m": 0.95,
+      "speed_mps": 0
+    }
+  ]
+}
