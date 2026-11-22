@@ -1,0 +1,7 @@
+{
+  "name": "saarathi-studio",
+  "private": true,
+  "scripts": {
+    "build": "bash scripts/build-vercel.sh"
+  }
+}
