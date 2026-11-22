@@ -1,6 +1,4 @@
-/* SAARATHI / STUDIO 3.0
- * Purpose-built interface: graphite & cobalt, replacing the previous palette.
- * Theme tokens apply to ordinary DOM and all SVG map layers. */
+/* SAARATHI / STUDIO 3.0*/
 :root {
   font-family:'DM Sans',Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-synthesis:none; text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;

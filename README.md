@@ -61,6 +61,25 @@ npm run dev
 
 By default the backend uses **http://127.0.0.1:8787** and Vite proxies `/api` to it. For a single production server, run `npm run build` inside `frontend/` and then start the C++ backend, which serves the frontend `dist/` directory.
 
+## Deploy to Vercel
+
+Import this repository into Vercel and keep the **Root Directory** at the repository root. The root `vercel.json` installs the frontend dependencies, builds the C++ engine as WebAssembly, and publishes `frontend/dist`. The build downloads Emscripten and Boost when they aren't available locally. The deployed app needs no environment variables or separate backend service. Each browser tab runs its own in-memory simulation, and refreshing starts a new session.
+
+To deploy the current working tree from the repository root using the Vercel CLI:
+
+```bash
+npx vercel login
+npx vercel deploy --prod
+```
+
+To preview the same build locally:
+
+```bash
+npm ci --prefix frontend
+bash scripts/build-vercel.sh
+npm --prefix frontend run preview
+```
+
 ## Workspace guide
 
 | Page | What it does |

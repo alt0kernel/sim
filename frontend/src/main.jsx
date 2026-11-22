@@ -9,6 +9,7 @@ import {
   Route, ScanLine, Search, Settings2, ShieldAlert, ShoppingBag, ShoppingCart, SlidersHorizontal,
   Sparkles, Store, Sun, Target, Timer, Volume2, VolumeX, WandSparkles, Waypoints, X, Zap
 } from 'lucide-react';
+import {engineError, engineLabel, exportSession, readState, sendAction} from '#simulator';
 import './studio.css';
 
 const NAV = [
@@ -442,15 +443,13 @@ function App(){
   const speaking=useRef(''),busy=useRef(false),settingsTrigger=useRef(null);
   useEffect(()=>{document.documentElement.dataset.theme=theme;try{localStorage.setItem('saarathi-studio-theme',theme)}catch{}},[theme]);
   useEffect(()=>{if(!toast)return;const timer=setTimeout(()=>setToast(''),3500);return()=>clearTimeout(timer)},[toast]);
-  const refresh=useCallback(async()=>{try{const res=await fetch('/api/state',{cache:'no-store'});if(!res.ok)throw new Error('API unavailable');const data=await res.json();setS(data);setError('')}catch{setError('Unable to connect to the C++ backend (port 8787).')}},[]);
+  const refresh=useCallback(async()=>{try{setS(await readState());setError('')}catch{setError(engineError)}},[]);
   useEffect(()=>{refresh();const t=setInterval(refresh,250);return()=>clearInterval(t)},[refresh]);
   const act=useCallback(async(action,value=null)=>{
     if(busy.current)return;
     busy.current=true;
     try{
-      const r=await fetch('/api/action',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,value})});
-      const data=await r.json();
-      if(!r.ok)throw new Error(data.error||'Action failed');
+      const data=await sendAction(action,value);
       setS(data);setError('');setAssistantReply('');
       if(action==='request_product'||action==='route_to_goal')setLayers(l=>l.routes?l:{...l,routes:true});
       return data;
@@ -462,6 +461,16 @@ function App(){
       else setToast(e.message||'Action failed');
     }finally{busy.current=false}
   },[]);
+  const downloadSession=async()=>{
+    try{
+      const url=URL.createObjectURL(await exportSession());
+      const link=document.createElement('a');
+      link.href=url;
+      link.download='saarathi_simulation.json';
+      link.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }catch(e){setToast(e.message||'Unable to export the session.')}
+  };
   useEffect(()=>{if(!voiceEnabled||!s?.last_speech||speaking.current===s.last_speech)return;speaking.current=s.last_speech;if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(s.last_speech);utterance.rate=1.05;window.speechSynthesis.speak(utterance)},[voiceEnabled,s?.last_speech]);
   useEffect(()=>{const key=e=>{if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target?.tagName)||e.target?.isContentEditable)return;
     if(e.code==='Space'){e.preventDefault();act('walk')}else if(e.key.toLowerCase()==='s')act('scan');else if(e.key.toLowerCase()==='u')act('reverse');else if(e.key.toLowerCase()==='o')act('obstacle');else if(e.key.toLowerCase()==='r')act('reset');else if(/^[1-9]$/.test(e.key))act('option',Number(e.key));
@@ -521,9 +530,9 @@ function App(){
       <div className="sidebar-session"><div className="session-art"><Radar size={22}/><span className="session-art-dot"/></div><div><small>ACTIVE SIMULATION</small><b>Session {String(s?.session||1).padStart(3,'0')}</b></div></div>
       <div className="sidebar-engine"><span className={'status-dot'+(error?' error':'')}/><span>{error?'Engine disconnected':'C++ engine connected'}</span><span className="sidebar-version">v3.0</span></div>
     </aside>
-    <div className="app-body"><header className="app-topbar"><div className="breadcrumbs"><span>Studio</span><ChevronRight size={15}/><b>{page}</b></div><div className="topbar-actions"><span className="topbar-session"><span className="status-dot"/> LIVE SESSION <b>{TIME(s?.time)}</b></span><button className="theme-button" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} title={`Switch to ${theme==='dark'?'light':'dark'} mode`}>{theme==='dark'?<Sun size={17}/>:<Moon size={17}/>}<span>{theme==='dark'?'Light mode':'Dark mode'}</span></button><IconButton Icon={RefreshCw} title="Reset session" onClick={()=>act('reset')}/><a className="download-button" href="/api/export" download><Download size={16}/><span>Export</span></a></div></header>
+    <div className="app-body"><header className="app-topbar"><div className="breadcrumbs"><span>Studio</span><ChevronRight size={15}/><b>{page}</b></div><div className="topbar-actions"><span className="topbar-session"><span className="status-dot"/> LIVE SESSION <b>{TIME(s?.time)}</b></span><button className="theme-button" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} title={`Switch to ${theme==='dark'?'light':'dark'} mode`}>{theme==='dark'?<Sun size={17}/>:<Moon size={17}/>}<span>{theme==='dark'?'Light mode':'Dark mode'}</span></button><IconButton Icon={RefreshCw} title="Reset session" onClick={()=>act('reset')}/><button className="download-button" aria-label="Export session" onClick={downloadSession}><Download size={16}/><span>Export</span></button></div></header>
     <main className="main-workspace"><div className="workspace-heading"><div><div className="workspace-eyebrow"><span/> RESEARCH SIMULATOR <span className="eyebrow-slash">/</span> {currentMap.toUpperCase()}</div><h1>{pageTitle}</h1><p>{pageDescription}</p></div><div className="heading-actions"><Pill type={error?'danger':'accent'} Icon={error?AlertCircle:Activity}>{error?'Disconnected':'Simulation active'}</Pill><button className="secondary-button" aria-expanded={settingsOpen} aria-controls="simulation-settings" onClick={toggleSettings}><SlidersHorizontal size={16}/> Configure</button></div></div>
-      {error&&<div className="error-banner"><AlertTriangle size={18}/>{error}<span>Run <code>./start.sh</code> from the project root.</span></div>}
+      {error&&<div className="error-banner"><AlertTriangle size={18}/>{error}</div>}
       {settingsOpen&&<SettingsPanel s={s} onAction={act} onClose={closeSettings}/>}
       <section className="assistant-workspace" aria-label="Saarathi assistant">
         <div className="assistant-console">
@@ -562,7 +571,7 @@ function App(){
         <section className="surface details-panel"><Titlebar kicker="SESSION PERFORMANCE" title="Cumulative metrics"/>{Object.entries(s?.metrics||{}).map(([k,v])=><div className="readout-line" key={k}><span>{TITLE(k)}</span><b>{v}</b></div>)}</section>
         <ActivityFeed s={s}/>
       </div>}
-      {page==='Activity log'&&<div className="analytics-grid"><ActivityFeed s={s} limit={45}/><div><section className="surface details-panel"><Titlebar kicker="EXPERIMENT RECORD" title="Session information"/>{[['Store layout',currentMap],['Planner',s?.planner?.name],['Shopping list',s?.list],['Profile',s?.profile],['Elapsed',TIME(s?.time)],['Simulation core','Native C++17'],['Recognition','Synthetic demo']].map(([k,v])=><div className="readout-line" key={k}><span>{k}</span><b>{v||'—'}</b></div>)}<a href="/api/export" download className="primary-button full-width"><Download size={16}/> Export session</a></section><ShoppingList s={s}/></div></div>}
+      {page==='Activity log'&&<div className="analytics-grid"><ActivityFeed s={s} limit={45}/><div><section className="surface details-panel"><Titlebar kicker="EXPERIMENT RECORD" title="Session information"/>{[['Store layout',currentMap],['Planner',s?.planner?.name],['Shopping list',s?.list],['Profile',s?.profile],['Elapsed',TIME(s?.time)],['Simulation core',engineLabel],['Recognition','Synthetic demo']].map(([k,v])=><div className="readout-line" key={k}><span>{k}</span><b>{v||'—'}</b></div>)}<button className="primary-button full-width" onClick={downloadSession}><Download size={16}/> Export session</button></section><ShoppingList s={s}/></div></div>}
       <footer className="footer"><span>SAARATHI / RESEARCH PROTOTYPE</span><span>C++17 Simulation Engine <i/> React Interface <i/> Synthetic Research Data</span></footer>
     </main></div>
     {toast&&<div className="toast" role="status"><Info size={16}/><span>{toast}</span><IconButton Icon={X} title="Dismiss" onClick={()=>setToast('')}/></div>}

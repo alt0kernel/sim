@@ -1,8 +1,10 @@
-// Saarathi AI Studio | native C++17 simulation + localhost HTTP server.
-// Model port: navigation / synthetic obstacle fusion / simulated SKU matching.
-// Not a binary-equivalent port of the Python research-specific PyTorch modules.
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#include <memory>
+#else
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
+#endif
 #include <boost/json.hpp>
 #include <boost/json/src.hpp>
 #include <algorithm>
@@ -31,9 +33,11 @@
 #include <utility>
 #include <vector>
 using namespace std;
+#ifndef __EMSCRIPTEN__
 namespace asio=boost::asio;
 namespace beast=boost::beast;
 namespace http=beast::http;
+#endif
 namespace bj=boost::json;
 namespace fs=std::filesystem;
 using Clock=chrono::steady_clock;
@@ -98,17 +102,13 @@ public:
   int map_visits=0;
   vector<string> map_ids={"standard","cross","loop","accessible","compact","superstore"};
   vector<string> algorithms={"Dijkstra","A*","BFS"};
-  Engine(const fs::path& f){
-    ifstream in(f);if(!in)throw runtime_error("Cannot open dataset: "+f.string());
-    string content((istreambuf_iterator<char>(in)),{});dataset=bj::parse(content);
+  explicit Engine(bj::value catalogue):dataset(std::move(catalogue)){
     auto& d=dataset.as_object();
     for(auto&v:d.at("skus").as_array()){
       auto&o=v.as_object();Product s{getstr(o,"sku_id"),getstr(o,"name"),getstr(o,"aisle"),getstr(o,"family"),getnum(o,"price_inr"),{},int(getnum(o,"stock",10)),""};
       for(auto&a:o.at("allergens").as_array())s.allergens.push_back(str(a));
       skus.push_back(s);
     }
-    // Each aisle has two independently selectable rack faces. Distribute actual
-    // catalogue SKUs deterministically across left and right shelves.
     map<string,int> positions;
     for(auto&sku:skus)sku.shelf=sku.aisle+((positions[sku.aisle]++%2)==0?"_L":"_R");
     for(auto&kv:d.at("shopping_lists").as_object()){vector<string> items;for(auto&v:kv.value().as_array())items.push_back(str(v));shopping[kv.key().data()]=items;}
@@ -198,7 +198,6 @@ public:
     map<string,double>d;map<string,string>parent;set<string>finished;
     for(auto&n:nodes)d[n.id]=numeric_limits<double>::infinity();
     d[start]=0;
-    // Euclidean heuristic is scaled to the *minimum* metres-per-pixel across edges.
     double min_ratio=1;
     for(auto&e:edges)min_ratio=min(min_ratio,e.meters/max(1.,dist(N(e.a),N(e.b))));
     auto heur=[&](const string&v){return algo=="A*"?dist(N(v),N(end))*min_ratio:0.;};
@@ -251,7 +250,6 @@ public:
   pair<double,double> xy()const{const auto&a=N(node);if(heading.empty())return {a.x,a.y};const auto&b=N(heading);return {a.x+(b.x-a.x)*progress,a.y+(b.y-a.y)*progress};}
   double edge_progress(const Hazard&h,const string&a,const string&b)const{return h.a==a&&h.b==b?h.t:1-h.t;}
   double hazard_distance(const Hazard&h)const{
-    // Only objects directly in front of the shopper on the current or next route leg.
     string a=node;string b=heading;
     if(b.empty()&&route.size()>1)b=route[1];
     if(b.empty()||!E(a,b))return 1e10;
@@ -270,7 +268,6 @@ public:
       if(sensors.alert&&!nearest->alerted){nearest->alerted=true;alerts++;log("hazard",nearest->label+" detected at "+to_string(rounded(sensors.fused,1))+" m");say("Stop. "+nearest->label+" ahead. Path obstructed.");
         if(auto*edge=E(nearest->a,nearest->b))edge->blocked=true;
         if(!heading.empty()){
-          // Fall back along the traversed edge. Preserve position and reverse direction.
           swap(node,heading);progress=1.-progress;retreating=true;
         }else{walking=false;}
         if(!detour&&mode!="SHELF_VISIT")destination.clear();
@@ -574,8 +571,6 @@ public:
     if(idx<0)throw runtime_error("Unknown catalogue product");
     const auto&p=skus[idx];
     if(p.shelf!=selected_shelf_id)throw runtime_error("Select the shelf containing this product first");
-    // This simulates physical collection, not remote ordering. The map can be
-    // inspected from anywhere but goods can only be collected at their aisle.
     if(node!=p.aisle||!heading.empty())throw runtime_error("Navigate to "+N(p.aisle).label+" before adding products from this shelf");
     if(complete)throw runtime_error("Checkout completed; reset to start a new trip");
     if(restricted(p))throw runtime_error("Allergen restriction: this product cannot be added for the selected profile");
@@ -759,11 +754,67 @@ public:
     {"superstore","Multi-concourse complex map"}};return labels.at(id);}
 };
 
+static void apply_action(Engine& engine,const string& body){
+  if(body.size()>8192)throw runtime_error("Request too large");
+  engine.action(bj::parse(body).as_object());
+}
+
+#ifdef __EMSCRIPTEN__
+
+static unique_ptr<Engine> browser_engine;
+
+template<typename Operation>
+static const char* browser_response(Operation operation){
+  static string response;
+  try{
+    response=bj::serialize(operation());
+  }catch(const exception& error){
+    response=bj::serialize(Obj{{"error",error.what()}});
+  }
+  return response.c_str();
+}
+
+extern "C" {
+EMSCRIPTEN_KEEPALIVE const char* simulator_init(const char* catalogue){
+  return browser_response([&]{
+    browser_engine=make_unique<Engine>(bj::parse(catalogue));
+    return bj::value(nullptr);
+  });
+}
+
+EMSCRIPTEN_KEEPALIVE void simulator_tick(double elapsed){
+  browser_engine->tick(elapsed);
+}
+
+EMSCRIPTEN_KEEPALIVE const char* simulator_state(){
+  return browser_response([]{return browser_engine->snapshot();});
+}
+
+EMSCRIPTEN_KEEPALIVE const char* simulator_action(const char* body){
+  return browser_response([&]{
+    apply_action(*browser_engine,body);
+    return browser_engine->snapshot();
+  });
+}
+
+EMSCRIPTEN_KEEPALIVE const char* simulator_export(){
+  return browser_response([]{return browser_engine->export_log();});
+}
+}
+
+#else
+
+static bj::value load_catalogue(const fs::path& file){
+  ifstream in(file);
+  if(!in)throw runtime_error("Cannot open dataset: "+file.string());
+  return bj::parse(string((istreambuf_iterator<char>(in)),{}));
+}
+
 struct Host {
   mutex lock;
   Engine engine;
   fs::path static_path;
-  explicit Host(const fs::path&catalogue,const fs::path&frontend):engine(catalogue),static_path(frontend){}
+  explicit Host(const fs::path&catalogue,const fs::path&frontend):engine(load_catalogue(catalogue)),static_path(frontend){}
 };
 static string mime(const string&file){
   auto ext=fs::path(file).extension().string();if(ext==".html")return "text/html; charset=utf-8";
@@ -782,8 +833,7 @@ static http::response<http::string_body> answer(const http::request<http::string
     if(target=="/api/health"){res.set(http::field::content_type,"application/json");res.body()=R"({"status":"ok","engine":"cpp17","version":"2.1"})";}
     else if(target=="/api/state"&&req.method()==http::verb::get){lock_guard<mutex>g(host.lock);res.set(http::field::content_type,"application/json");res.body()=bj::serialize(host.engine.snapshot());}
     else if(target=="/api/action"&&req.method()==http::verb::post){
-      if(req.body().size()>8192)throw runtime_error("Request too large");
-      auto cmd=bj::parse(req.body()).as_object();lock_guard<mutex>g(host.lock);host.engine.action(cmd);
+      lock_guard<mutex>g(host.lock);apply_action(host.engine,req.body());
       res.set(http::field::content_type,"application/json");res.body()=bj::serialize(host.engine.snapshot());
     }else if(target=="/api/export"&&req.method()==http::verb::get){lock_guard<mutex>g(host.lock);res.set(http::field::content_type,"application/json");res.set(http::field::content_disposition,"attachment; filename=saarathi_simulation.json");res.body()=bj::serialize(host.engine.export_log());}
     else if(req.method()==http::verb::get&&target.find("..") == string::npos&&target.rfind("/api/",0)!=0){
@@ -819,3 +869,4 @@ int main(int argc,char**argv){
     running=false;ticker.join();
   }catch(const exception&e){cerr<<"Startup error: "<<e.what()<<'\n';return 1;}
 }
+#endif
